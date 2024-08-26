@@ -1,13 +1,4 @@
-export interface User {
-  nameUser: String,
-  email: String,
-  pass: String,
-  role: {
-    admin: Boolean,
-    seller: Boolean
-  },
-  active: Boolean
-}
+
 
 export interface Form {
   nameForm: {
@@ -42,3 +33,66 @@ export interface File {
   }],
   active: Boolean
 }
+export interface Address{
+  address: string;
+  zipcode: number;
+  city: string;
+}
+
+
+export interface IUser extends Document {
+  _id?: string;
+  documentType: string;
+  documentNumber: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  secondLastName?: string;
+  email: string;
+  password: string;
+  isActive: boolean;
+  
+}
+
+interface IPatient extends IUser {
+  birthDate: Date;
+  gender: string;
+  mobileNumber?: string;
+  landlineNumber?: string;
+  residentialAddress?: string;
+  countryOfResidence: string;
+  stateOfResidence: string;
+  cityOfResidence: string;
+  doctorId?: string;
+}
+
+interface IDoctor extends IUser {
+  medicalLicense: string;
+  mobileNumber?: string;
+  digitalSignature?: Buffer;
+}
+
+export interface Login {
+  email: string
+  password: string
+}
+
+export interface TokenPayload {
+  user_id: string
+  user_email: string
+  user_role: boolean
+  iat: number
+}
+
+interface AuthenticatedRequest extends Request {
+  user?: string
+}
+
+declare global {
+  namespace Express {
+    export interface Request {
+      user?: string
+    }
+  }
+}
+
